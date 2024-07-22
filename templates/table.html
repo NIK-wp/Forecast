@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Flask App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<h1>Weather forcast</h1>
+
+
+<table>
+    <thead>
+    <tr>
+        <th>Date</th>
+        <th>Precipitation</th>
+        <th>Windspeed</th>
+        <th>Temperature</th>
+        <th>Image</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for i in range(length) %}
+    <tr>
+        <td>{{time[i]}}</td>
+        <td>{{precipitation[i]}}</td>
+        <td>{{windspeed[i]}}</td>
+        <td>{{temperature[i]}}</td>
+        <td><img src="{{ url_for('static', filename='images/' ~ image_name[i]) }}" alt="Example Image"
+                 class="example-image"></td>
+
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>
