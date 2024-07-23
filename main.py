@@ -1,7 +1,18 @@
 from flask import Flask, jsonify, request, render_template, send_from_directory
 import requests
+import cgi
 
 app = Flask(__name__)
+
+
+@app.route('/input', methods=['GET'])
+def get_user_data():
+    form = cgi.FieldStorage()
+    latitude = form.getvalue('latitude')
+    longitude = form.getvalue('longitude')
+    date = form.getvalue('date')
+    parameters = form.getvalue('parameters')
+    print(latitude, longitude, date, parameters)
 
 
 def get_weather_data(latitude: float, longitude: float, date: str, parameters: list):
@@ -52,3 +63,5 @@ def table():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+
+# /weather?latitude=47.23571&longitude=39.70151&date=2024-07-11&parameters=temperature_2m&parameters=precipitation&parameters=windspeed_10m
