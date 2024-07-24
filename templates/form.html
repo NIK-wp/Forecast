@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:http="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,7 +7,7 @@
     <title>Input Form</title>
 </head>
 <body>
-    <form action="submit_data.py" method="post">
+    <form id="myForm">
         <label for="latitude">Latitude:</label>
         <input type="text" id="latitude" name="latitude"><br><br>
 
@@ -17,10 +17,8 @@
         <label for="date">Date:</label>
         <input type="text" id="date" name="date"><br><br>
 
-        <label for="parameters">Parameters:</label>
-        <input type="text" id="parameters" name="parameters"><br><br>
-
-        <input type="submit" value="Submit">
+        <button type="submit">Submit</button>
     </form>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

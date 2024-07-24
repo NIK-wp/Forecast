@@ -1,18 +1,23 @@
-from flask import Flask, jsonify, request, render_template, send_from_directory
+from flask import Flask, jsonify, request, render_template, send_from_directory, url_for
 import requests
 import cgi
 
 app = Flask(__name__)
 
 
-@app.route('/input', methods=['GET'])
+@app.route('/', methods=['GET'])
+def show_html():
+    return render_template('form.html')
+
+
+@app.route('/submit', methods=['POST'])
 def get_user_data():
     form = cgi.FieldStorage()
-    latitude = form.getvalue('latitude')
-    longitude = form.getvalue('longitude')
-    date = form.getvalue('date')
-    parameters = form.getvalue('parameters')
-    print(latitude, longitude, date, parameters)
+    latitude = request.form.get('latitude')
+    longitude = request.form.get('longitude')
+    date = request.form.get('date')
+    redirect_url = url_for('weather', latitude=latitude, longitude=longitude, date=date)
+    return jsonify({'redirect_url': redirect_url})
 
 
 def get_weather_data(latitude: float, longitude: float, date: str, parameters: list):
@@ -32,7 +37,7 @@ def weather():
     latitude = request.args.get('latitude', type=float)
     longitude = request.args.get('longitude', type=float)
     date = request.args.get('date', type=str)
-    parameters = request.args.getlist('parameters')
+    parameters = ['temperature_2m', 'precipitation', 'windspeed_10m']
 
     if not latitude or not longitude or not date or not parameters:
         return jsonify({'Error': 'Not enough required parameters'}), 400
